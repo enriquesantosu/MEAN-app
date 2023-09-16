@@ -7,22 +7,11 @@ exports.crearPersonaje = async (req, res) => {
     try {
         let personajeModel
         personajeModel = new Personaje(req.body)
-
-        let personajeModelCheck = await Personaje.findOne({ name: personajeModel.name })
-
-        if (personajeModelCheck) {
-            console.log('duplicate info not saved')
-        } else {
-            await personajeModel.save() // el save hace un insertOne
-            console.log('personaje salvado')
-        }
-
-
+        await personajeModel.save()
         res.send(personajeModel)
-
     } catch (error) {
         console.log(error)
-        res.status(502).send('Ups')
+        res.status(502).send('Ups... ocurrió algo en el proceso, comuníquese con el administrador')
     }
 }
 
@@ -59,20 +48,39 @@ exports.obtenerPersonaje = async (req, res) => {
     }
 }
 
-// exports.actualizarPersonajes = async (req, res) => {
-//     try {
-//         let personajeModel = new Personaje(req.body)
+exports.actualizarPersonaje = async (req, res) => {
+    try {
+        let regexIdMongo = /^[0-9a-fA-F]{24}$/
+        if (regexIdMongo.test(req.params.id)) {
 
-//         let personajeModelCheck = await Personaje.updateOne({ name: personajeModel.name }, { nombre: personajeModel.name, edad: personajeModel.edad, urlImagen: personajeModel.urlImagen })
-//     } catch (error) {
+            const personajeData = await Personaje.findById(req.params.id) // los parametros aqui hacen referencia a los parametros de la url despues del endpoint fijo (endpoint fijo, endpoint dynamico, variable)
 
-//     }
+            if (!personajeData) {
+                res.status(404).send('Personaje no encontrado')
+            } else {
+                const { nombre, edad, urlImagen } = req.body
 
-//     res.send('Actualizando personajes'
+                personajeData.nombre = nombre
+                personajeData.edad = edad
+                personajeData.urlImagen = urlImagen
 
-//     )
+                let documentoActualizado = await Personaje.findOneAndUpdate({ _id: req.params.id }, personajeData, { new: true })
+                res.json(documentoActualizado)
 
-// }
+            }
+        } else {
+            res.status(418).send('El id proporcionado no existe o no es correcto')
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(502).send('Ups... ocurrió algo en el proceso, comuníquese con el administrador')
+    }
+}
+
+
+
+
+
 
 exports.eliminarPersonaje = async (req, res) => { //debemos usar el metodo findOneAndRemove()
     try {

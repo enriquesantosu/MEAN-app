@@ -9,8 +9,6 @@ router.post('/crear-personaje', personajesController.crearPersonaje)
 
 router.delete('/eliminar-personaje/:id', personajesController.eliminarPersonaje)
 
-// router.put('/', personajesController.actualizarPersonajes)
-
-// router.delete('/', personajesController.eliminarPersonajes)
+router.put('/actualizar-personaje/:id', personajesController.actualizarPersonaje)
 
 module.exports = router

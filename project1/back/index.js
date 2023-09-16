@@ -10,6 +10,6 @@ app.use(express.json())
 
 app.use('/api/v1', require('./routes/routes'))
 
-app.listen(3005, () => {
-    console.log("la aplicación se está ejecutando en http://localhost:3005")
+app.listen(4000, () => {
+    console.log("la aplicación se está ejecutando en http://localhost:4000")
 })
