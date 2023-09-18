@@ -8,6 +8,8 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { LoginComponent } from './components/login/login.component';
 import { PaginaPrincipalComponent } from './components/pagina-principal/pagina-principal.component';
 import { PaginaEspecificaComponent } from './components/pagina-especifica/pagina-especifica.component';
+import { AppLayoutNavbarComponent } from './app-layout-navbar/app-layout-navbar.component';
+import { AppLayoutAlternateNavbarComponent } from './app-layout-alternate-navbar/app-layout-alternate-navbar.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { PaginaEspecificaComponent } from './components/pagina-especifica/pagina
     RegistroComponent,
     LoginComponent,
     PaginaPrincipalComponent,
-    PaginaEspecificaComponent
+    PaginaEspecificaComponent,
+    AppLayoutNavbarComponent,
+    AppLayoutAlternateNavbarComponent
   ],
   imports: [
     BrowserModule,
